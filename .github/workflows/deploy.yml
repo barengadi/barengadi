@@ -16,36 +16,25 @@ jobs:
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.VPS_SSH_KEY }}
           password: ${{ secrets.VPS_PASSWORD }}
-          port: ${{ secrets.VPS_PORT || 22 }}
+          port: 22
           script: |
             set -e
             echo "🚀 Starting Docker Deployment on VPS..."
-
-            # Masuk ke folder web
             mkdir -p /var/www/barengadi
             cd /var/www/barengadi
-
-            # Clone jika belum ada, atau pull update terbaru jika sudah ada
+            
             if [ ! -d ".git" ]; then
-              echo "📦 Cloning repository..."
               git clone https://github.com/suryadigit/barengadi.git .
             else
-              echo "📥 Pulling latest changes from main..."
               git fetch origin main
               git reset --hard origin/main
             fi
 
-            # Build & Run Container dengan Docker Compose (support docker-compose & docker compose)
-            echo "🐳 Building & starting Docker container..."
             if command -v docker-compose &> /dev/null; then
               docker-compose up -d --build
             else
               docker compose up -d --build
             fi
 
-            # Bersihkan image cache lama yang tidak terpakai
-            docker image prune -f
-
-            echo "✅ Deployment with Docker Successful!"
+            echo "✅ Deployment Successful!"
