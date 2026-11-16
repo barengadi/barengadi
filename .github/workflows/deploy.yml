@@ -37,9 +37,13 @@ jobs:
               git reset --hard origin/main
             fi
 
-            # Build & Run Container dengan Docker Compose
+            # Build & Run Container dengan Docker Compose (support docker-compose & docker compose)
             echo "🐳 Building & starting Docker container..."
-            docker compose up -d --build
+            if command -v docker-compose &> /dev/null; then
+              docker-compose up -d --build
+            else
+              docker compose up -d --build
+            fi
 
             # Bersihkan image cache lama yang tidak terpakai
             docker image prune -f
