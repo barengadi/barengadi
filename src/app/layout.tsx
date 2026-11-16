@@ -6,9 +6,11 @@ export const metadata: Metadata = {
   description:
     "Bimbingan privat tatap muka 1-on-1 langsung di rumah atau kantor Anda di Medan. Kuasai implementasi AI dan tools praktis untuk pekerjaan dan bisnis.",
   icons: {
-    icon: "/logo-aiba.png",
-    shortcut: "/logo-aiba.png",
-    apple: "/logo-aiba.png",
+    icon: [
+      { url: "/icon.png", sizes: "512x512", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: "/apple-icon.png",
   },
 };
 
