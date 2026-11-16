@@ -1,4 +1,4 @@
-name: Deploy to VPS
+name: Deploy to VPS (Docker)
 
 on:
   push:
@@ -7,25 +7,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "npm"
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Test Build
-        run: npm run build
-
       - name: Deploy to VPS via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -36,7 +21,7 @@ jobs:
           port: ${{ secrets.VPS_PORT || 22 }}
           script: |
             set -e
-            echo "🚀 Starting Deployment on VPS..."
+            echo "🚀 Starting Docker Deployment on VPS..."
 
             # Masuk ke folder web
             mkdir -p /var/www/barengadi
@@ -52,19 +37,11 @@ jobs:
               git reset --hard origin/main
             fi
 
-            # Install dependencies & compile build Next.js
-            echo "🔨 Installing packages & building..."
-            npm install
-            npm run build
+            # Build & Run Container dengan Docker Compose
+            echo "🐳 Building & starting Docker container..."
+            docker compose up -d --build
 
-            # Jalankan / Restart dengan PM2
-            if pm2 describe barengadi > /dev/null 2>&1; then
-              echo "🔄 Reloading PM2 process..."
-              pm2 reload barengadi --update-env
-            else
-              echo "▶️ Starting new PM2 process..."
-              pm2 start npm --name "barengadi" -- start
-            fi
+            # Bersihkan image cache lama yang tidak terpakai
+            docker image prune -f
 
-            pm2 save
-            echo "✅ Deployment Successful!"
+            echo "✅ Deployment with Docker Successful!"
