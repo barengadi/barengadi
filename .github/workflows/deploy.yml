@@ -29,11 +29,11 @@ jobs:
             echo "✅ [OK] Secret 'VPS_USERNAME' is configured"
           fi
 
-          if [ -z "${{ secrets.VPS_PASSWORD }}" ] && [ -z "${{ secrets.VPS_SSH_KEY }}" ]; then
-            echo "❌ [MISSING] Neither 'VPS_PASSWORD' nor 'VPS_SSH_KEY' is configured!"
+          if [ -z "${{ secrets.VPS_PASSWORD }}" ]; then
+            echo "❌ [MISSING] Secret 'VPS_PASSWORD' is not set!"
             MISSING=1
           else
-            echo "✅ [OK] Authentication secret is configured"
+            echo "✅ [OK] Secret 'VPS_PASSWORD' is configured"
           fi
 
           if [ $MISSING -eq 1 ]; then
@@ -49,7 +49,6 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
           password: ${{ secrets.VPS_PASSWORD }}
-          key: ${{ secrets.VPS_SSH_KEY }}
           port: 22
           debug: true
           command_timeout: 15m
