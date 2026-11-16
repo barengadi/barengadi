@@ -59,7 +59,7 @@ Saya ingin konfirmasi ketersediaan jadwal dan estimasi durasi sesinya ya mas. Te
               <input
                 type="tel"
                 required
-                placeholder="0812XXXXXXXX"
+                placeholder="0812XXXXXXX"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-slate-900 placeholder:text-slate-400"
