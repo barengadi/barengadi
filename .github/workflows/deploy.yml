@@ -8,68 +8,21 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
-      - name: Validate Secrets Configuration
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy with Docker
         run: |
-          echo "=== 🔍 Verifying GitHub Secrets ==="
-          MISSING=0
-          if [ -z "${{ secrets.VPS_HOST }}" ]; then
-            echo "❌ [MISSING] Secret 'VPS_HOST' is not set!"
-            MISSING=1
+          set -e
+          echo "🚀 Starting Docker Deployment..."
+
+          if command -v docker-compose &> /dev/null; then
+            docker-compose up -d --build
           else
-            echo "✅ [OK] Secret 'VPS_HOST' is configured"
+            docker compose up -d --build
           fi
 
-          if [ -z "${{ secrets.VPS_USERNAME }}" ]; then
-            echo "❌ [MISSING] Secret 'VPS_USERNAME' is not set!"
-            MISSING=1
-          else
-            echo "✅ [OK] Secret 'VPS_USERNAME' is configured"
-          fi
-
-          if [ -z "${{ secrets.VPS_PASSWORD }}" ]; then
-            echo "❌ [MISSING] Secret 'VPS_PASSWORD' is not set!"
-            MISSING=1
-          else
-            echo "✅ [OK] Secret 'VPS_PASSWORD' is configured"
-          fi
-
-          if [ $MISSING -eq 1 ]; then
-            echo ""
-            echo "🚨 Silakan buka: https://github.com/barengadi/barengadi/settings/secrets/actions"
-            echo "Pastikan secret di atas dimasukkan di bagian 'Repository secrets' (BUKAN Environment secrets)."
-            exit 1
-          fi
-
-      - name: Deploy to VPS via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          port: 22
-          debug: true
-          command_timeout: 15m
-          script: |
-            set -e
-            echo "🚀 Starting Docker Deployment on VPS..."
-            mkdir -p /var/www/barengadi
-            cd /var/www/barengadi
-            
-            if [ ! -d ".git" ]; then
-              git clone https://github.com/barengadi/barengadi.git .
-            else
-              git remote set-url origin https://github.com/barengadi/barengadi.git 2>/dev/null || true
-              git fetch origin main
-              git reset --hard origin/main
-            fi
-
-            if command -v docker-compose &> /dev/null; then
-              docker-compose up -d --build
-            else
-              docker compose up -d --build
-            fi
-
-            echo "✅ Deployment Successful!"
+          echo "✅ Deployment Successful!"
