@@ -11,13 +11,48 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Validate Secrets Configuration
+        run: |
+          echo "=== 🔍 Verifying GitHub Secrets ==="
+          MISSING=0
+          if [ -z "${{ secrets.VPS_HOST }}" ]; then
+            echo "❌ [MISSING] Secret 'VPS_HOST' is not set!"
+            MISSING=1
+          else
+            echo "✅ [OK] Secret 'VPS_HOST' is configured"
+          fi
+
+          if [ -z "${{ secrets.VPS_USERNAME }}" ]; then
+            echo "❌ [MISSING] Secret 'VPS_USERNAME' is not set!"
+            MISSING=1
+          else
+            echo "✅ [OK] Secret 'VPS_USERNAME' is configured"
+          fi
+
+          if [ -z "${{ secrets.VPS_PASSWORD }}" ] && [ -z "${{ secrets.VPS_SSH_KEY }}" ]; then
+            echo "❌ [MISSING] Neither 'VPS_PASSWORD' nor 'VPS_SSH_KEY' is configured!"
+            MISSING=1
+          else
+            echo "✅ [OK] Authentication secret is configured"
+          fi
+
+          if [ $MISSING -eq 1 ]; then
+            echo ""
+            echo "🚨 Silakan buka: https://github.com/barengadi/barengadi/settings/secrets/actions"
+            echo "Pastikan secret di atas dimasukkan di bagian 'Repository secrets' (BUKAN Environment secrets)."
+            exit 1
+          fi
+
       - name: Deploy to VPS via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
           password: ${{ secrets.VPS_PASSWORD }}
+          key: ${{ secrets.VPS_SSH_KEY }}
           port: 22
+          debug: true
+          command_timeout: 15m
           script: |
             set -e
             echo "🚀 Starting Docker Deployment on VPS..."
