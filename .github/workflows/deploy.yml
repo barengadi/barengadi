@@ -25,8 +25,9 @@ jobs:
             cd /var/www/barengadi
             
             if [ ! -d ".git" ]; then
-              git clone https://github.com/suryadigit/barengadi.git .
+              git clone https://github.com/barengadi/barengadi.git .
             else
+              git remote set-url origin https://github.com/barengadi/barengadi.git 2>/dev/null || true
               git fetch origin main
               git reset --hard origin/main
             fi
