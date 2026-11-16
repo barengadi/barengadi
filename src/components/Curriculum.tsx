@@ -1,7 +1,16 @@
+"use client";
+
 import React from "react";
 import { Briefcase, TrendingUp, CheckCircle2 } from "lucide-react";
 
 export default function Curriculum() {
+  const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   const tracks = [
     {
       icon: Briefcase,
@@ -69,7 +78,8 @@ export default function Curriculum() {
                 <div className="pt-4 border-t border-slate-100">
                   <a
                     href="#booking"
-                    className="text-xs font-semibold text-slate-900 hover:text-slate-600 inline-flex items-center gap-1"
+                    onClick={(e) => scrollTo(e, "booking")}
+                    className="text-xs font-semibold text-slate-900 hover:text-slate-600 inline-flex items-center gap-1 cursor-pointer"
                   >
                     Pilih materi ini untuk sesi visit →
                   </a>

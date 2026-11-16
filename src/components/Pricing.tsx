@@ -1,7 +1,16 @@
+"use client";
+
 import React from "react";
 import { Check, MessageCircle } from "lucide-react";
 
 export default function Pricing() {
+  const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   const onlineFeatures = [
     "Sesi privat interaktif via Google Meet / Zoom (layar dipandu langsung)",
     "Praktik langsung di laptop masing-masing menggunakan file kerja asli",
@@ -83,7 +92,8 @@ export default function Pricing() {
             <div className="space-y-2.5 pt-4 border-t border-slate-100">
               <a
                 href="#booking"
-                className="w-full py-3.5 px-4 rounded-xl text-center text-xs sm:text-sm font-bold bg-[#0269ac] text-white hover:bg-[#02568e] transition-colors inline-flex items-center justify-center gap-2 shadow-sm"
+                onClick={(e) => scrollTo(e, "booking")}
+                className="w-full py-3.5 px-4 rounded-xl text-center text-xs sm:text-sm font-bold bg-[#0269ac] text-white hover:bg-[#02568e] transition-colors inline-flex items-center justify-center gap-2 shadow-sm cursor-pointer"
               >
                 Booking Sesi Online
               </a>
@@ -148,7 +158,8 @@ export default function Pricing() {
             <div className="space-y-2.5 pt-4 border-t border-slate-100">
               <a
                 href="#booking"
-                className="w-full py-3.5 px-4 rounded-xl text-center text-xs sm:text-sm font-bold bg-[#ef4444] hover:bg-[#dc2626] text-white shadow-md shadow-red-500/20 transition-all hover:scale-[1.02] active:scale-98 inline-flex items-center justify-center gap-2"
+                onClick={(e) => scrollTo(e, "booking")}
+                className="w-full py-3.5 px-4 rounded-xl text-center text-xs sm:text-sm font-bold bg-[#ef4444] hover:bg-[#dc2626] text-white shadow-md shadow-red-500/20 transition-all hover:scale-[1.02] active:scale-98 inline-flex items-center justify-center gap-2 cursor-pointer"
               >
                 Jadwalkan Visit Medan
               </a>

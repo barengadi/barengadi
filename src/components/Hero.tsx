@@ -19,6 +19,14 @@ export default function Hero() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="bg-white w-full">
       {/* 
@@ -73,16 +81,32 @@ export default function Hero() {
 
           {/* Center: Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-7 text-xs font-semibold text-white/90">
-            <a href="#materi" className="hover:text-white transition-colors">
+            <a
+              href="#materi"
+              onClick={(e) => scrollTo(e, "materi")}
+              className="hover:text-white transition-colors cursor-pointer"
+            >
               Materi
             </a>
-            <a href="#paket" className="hover:text-white transition-colors">
+            <a
+              href="#paket"
+              onClick={(e) => scrollTo(e, "paket")}
+              className="hover:text-white transition-colors cursor-pointer"
+            >
               Biaya Sesi
             </a>
-            <a href="#booking" className="hover:text-white transition-colors">
+            <a
+              href="#booking"
+              onClick={(e) => scrollTo(e, "booking")}
+              className="hover:text-white transition-colors cursor-pointer"
+            >
               Jadwal Visit
             </a>
-            <a href="#faq" className="hover:text-white transition-colors">
+            <a
+              href="#faq"
+              onClick={(e) => scrollTo(e, "faq")}
+              className="hover:text-white transition-colors cursor-pointer"
+            >
               FAQ
             </a>
           </nav>
@@ -126,7 +150,8 @@ export default function Hero() {
                 <div className="pt-1 sm:pt-2 flex flex-row items-center justify-center lg:justify-start">
                   <a
                     href="#booking"
-                    className="inline-flex items-center justify-center gap-2 px-10 sm:px-14 min-w-[170px] sm:min-w-[190px] py-3 sm:py-3.5 rounded-full bg-[#ef4444] hover:bg-[#dc2626] text-white font-bold text-sm sm:text-base tracking-wide shadow-[0_0_25px_rgba(239,68,68,0.45)] hover:shadow-[0_0_35px_rgba(239,68,68,0.65)] transition-all hover:scale-105 active:scale-95"
+                    onClick={(e) => scrollTo(e, "booking")}
+                    className="inline-flex items-center justify-center gap-2 px-10 sm:px-14 min-w-[170px] sm:min-w-[190px] py-3 sm:py-3.5 rounded-full bg-[#ef4444] hover:bg-[#dc2626] text-white font-bold text-sm sm:text-base tracking-wide shadow-[0_0_25px_rgba(239,68,68,0.45)] hover:shadow-[0_0_35px_rgba(239,68,68,0.65)] transition-all hover:scale-105 active:scale-95 cursor-pointer"
                   >
                     <span>Ambil Kelas</span>
                   </a>
@@ -169,7 +194,8 @@ export default function Hero() {
                 <div className="pt-1 flex flex-row items-center justify-center">
                   <a
                     href="#booking"
-                    className="inline-flex items-center justify-center gap-2 px-10 sm:px-14 min-w-[170px] sm:min-w-[190px] py-3 sm:py-3.5 rounded-full bg-[#ef4444] hover:bg-[#dc2626] text-white font-bold text-sm sm:text-base tracking-wide shadow-[0_0_25px_rgba(239,68,68,0.45)] hover:shadow-[0_0_35px_rgba(239,68,68,0.65)] transition-all hover:scale-105 active:scale-95"
+                    onClick={(e) => scrollTo(e, "booking")}
+                    className="inline-flex items-center justify-center gap-2 px-10 sm:px-14 min-w-[170px] sm:min-w-[190px] py-3 sm:py-3.5 rounded-full bg-[#ef4444] hover:bg-[#dc2626] text-white font-bold text-sm sm:text-base tracking-wide shadow-[0_0_25px_rgba(239,68,68,0.45)] hover:shadow-[0_0_35px_rgba(239,68,68,0.65)] transition-all hover:scale-105 active:scale-95 cursor-pointer"
                   >
                     <span>Ambil Kelas</span>
                   </a>
@@ -185,7 +211,8 @@ export default function Hero() {
           <div className="hidden sm:inline-flex absolute left-6 sm:left-14 bottom-8 sm:bottom-12 z-30">
             <a
               href="#materi"
-              className="inline-flex items-center gap-1.5 text-xs text-white/90 hover:text-white transition-colors"
+              onClick={(e) => scrollTo(e, "materi")}
+              className="inline-flex items-center gap-1.5 text-xs text-white/90 hover:text-white transition-colors cursor-pointer"
             >
               <span>Scroll down</span>
               <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
