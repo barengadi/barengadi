@@ -41,7 +41,7 @@ export default function Curriculum() {
       <div className="max-w-5xl mx-auto px-6">
         <div className="text-center max-w-xl mx-auto mb-14 space-y-2">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Materi yang Bisa Dipelajari
+            Materi yang Dipelajari
           </h2>
         </div>
 
