@@ -34,7 +34,7 @@ Saya ingin konfirmasi ketersediaan jadwal dan estimasi durasi sesinya ya mas. Te
       <div className="max-w-xl mx-auto px-6">
         <div className="text-center mb-10 space-y-2">
           <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-            Jadwalkan Sesi Privat Anda
+            Jadwalkan Sesi Privat
           </h2>
         </div>
 
